@@ -1,8 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
+import { HttpClientModule , HTTP_INTERCEPTORS} from '@angular/common/http';
+
 import { LoggerService } from './logger/logger.service';
 import { ConsoleLoggerService } from './logger/console-logger.service';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PublicComponent } from './public/public.component';
@@ -15,6 +18,7 @@ import { LoginComponent } from './public/login/login.component';
 import { AnagraficaComponent } from './admin/anagrafica/anagrafica.component';
 import { ExperiencesComponent } from './admin/experiences/experiences.component';
 import { NotfoundComponent } from './notfound/notfound.component';
+import { JwtInterceptor } from './helper/jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -32,9 +36,16 @@ import { NotfoundComponent } from './notfound/notfound.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    HttpClientModule,
+    HttpModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
   ],
-  providers: [ { provide: LoggerService, useClass: ConsoleLoggerService } ],
+  providers: [ 
+    { provide: LoggerService, useClass: ConsoleLoggerService },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true } 
+  ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

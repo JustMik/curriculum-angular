@@ -13,7 +13,7 @@ export class NotfoudScript {
         var loop1,
             loop2,
             loop3,
-            time=40, 
+            time=30, 
             i=0, 
             number;
             

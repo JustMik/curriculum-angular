@@ -11,6 +11,7 @@ import { ExperiencesComponent } from './admin/experiences/experiences.component'
 import { PublicComponent } from './public/public.component';
 import { AdminComponent } from './admin/admin.component';
 import { NotfoundComponent } from './notfound/notfound.component'; 
+import { AuthGuard } from './guard/auth.guard';
 
 const routes: Routes = [
   { path:'', redirectTo:'public/chisono', pathMatch:'full' },
@@ -24,11 +25,11 @@ const routes: Routes = [
       { path:'login', component:LoginComponent }
     ]
   },
-  { path:'admin' , component:AdminComponent, children: 
+  { path:'admin' , component:AdminComponent, canActivate: [AuthGuard], children: 
     [
-      { path:'', component:AnagraficaComponent },
-      { path:'anagrafica', component:AnagraficaComponent },
-      { path:'experiences', component:ExperiencesComponent }
+      { path:'', component:AnagraficaComponent, canActivate: [AuthGuard] },
+      { path:'anagrafica', component:AnagraficaComponent, canActivate: [AuthGuard] },
+      { path:'experiences', component:ExperiencesComponent, canActivate: [AuthGuard] }
     ]
   },
     
